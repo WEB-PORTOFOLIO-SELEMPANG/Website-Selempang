@@ -210,11 +210,11 @@ export default function Home() {
             <RevealOnScroll delay={0}>
               <div className="space-y-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white sm:text-4xl tracking-tight leading-tight">
-                  Sejak 2021 Menghias Momen Kelulusan Terindah Anda
+                  Sejak 2019 Menghias Momen Kelulusan Terindah Anda
                 </h2>
                 <div className="text-zinc-300 text-xs sm:text-sm font-light space-y-4 leading-relaxed">
                   <p>
-                    Dins Selempang didirikan pada awal tahun 2021 dengan misi sederhana: memberikan apresiasi tertinggi bagi mereka yang telah berjuang menuntut ilmu atau meraih prestasi terbaik. Kami sadar bahwa selempang bukan sekadar kain, melainkan simbol kebanggaan dan kerja keras bertahun-tahun.
+                    Dins Selempang didirikan pada awal tahun 2019 dengan misi sederhana: memberikan apresiasi tertinggi bagi mereka yang telah berjuang menuntut ilmu atau meraih prestasi terbaik. Kami sadar bahwa selempang bukan sekadar kain, melainkan simbol kebanggaan dan kerja keras bertahun-tahun.
                   </p>
                   <p>
                     Dimulai dari produksi rumahan berskala kecil, kami berkomitmen untuk selalu mempertahankan kualitas jahitan dan kerapian bordir. Berkat kepercayaan ribuan wisudawan, Dins Selempang kini telah tumbuh menjadi produsen selempang andalan bagi mahasiswa di berbagai universitas besar di Indonesia, pageant event, hingga penghargaan instansi.
@@ -225,7 +225,7 @@ export default function Home() {
                   <div className="flex gap-2 sm:gap-3">
                     <div className="h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">
                       <svg className="w-4.5 h-4.5 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
                     <div>
@@ -830,7 +830,7 @@ export default function Home() {
             {/* Instagram Contact Card */}
             <RevealOnScroll delay={150}>
               <a 
-                href="https://instagram.com/dins.selempang"
+                href="https://www.instagram.com/selempang_pamulang?igsh=bHJ3OGlkajFzeTc0"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-red-500/30 hover:bg-red-500/5 transition-all duration-300 h-full"
@@ -851,7 +851,7 @@ export default function Home() {
             {/* Shopee Contact Card */}
             <RevealOnScroll delay={300}>
               <a 
-                href="https://shopee.co.id/dins.selempang"
+                href="shopee.co.id/dinzselempang"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[85vw] md:w-full shrink-0 snap-center group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 h-full"
