@@ -851,7 +851,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-blue-400 transition-colors font-sans">Instagram</h3>
                 <p className="text-zinc-400 text-xs mt-2 max-w-xs leading-relaxed font-light">Lihat ratusan portofolio terbaru kami, foto testimonial, keseruan wisuda, dan info promo di feeds/story kami.</p>
                 <span className="text-xs font-bold text-blue-400 mt-4 sm:mt-6 inline-flex items-center gap-1 group-hover:underline">
-                  Ikuti @dins.selempang ➔
+                  Follow our Instagram ➔
                 </span>
               </a>
             </RevealOnScroll>
