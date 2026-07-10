@@ -99,7 +99,6 @@ export default function Home() {
   const [calcMaterial, setCalcMaterial] = useState("Satin");
   const [calcBorder, setCalcBorder] = useState("Pita");
   const [calcLogo, setCalcLogo] = useState(false);
-  const [calcExpress, setCalcExpress] = useState(false);
   const [calcKalungModel, setCalcKalungModel] = useState("Tanpa List");
 
   // Calculate sash price dynamically based on new user pricing structure
@@ -114,20 +113,28 @@ export default function Home() {
       let base = 75000;
       if (calcKalungModel === "Double Beludru") base = 80000;
       if (calcKalungModel === "Batik Double Beludru") base = 90000;
-      if (calcExpress) base += 15000;
+      if (calcLogo) base += 10000;
       return base;
     }
   };
 
   // Generate WA custom order link
   const getWhatsAppLink = (isCalc = false) => {
-    const phone = "6285741007890"; // WhatsApp number format
+    const phone = "6288212803947"; // WhatsApp number format
     let message = "";
     if (isCalc) {
       if (calcType === "Samping") {
-        message = `Halo Dins Selempang, saya ingin memesan Selempang Samping custom dengan rincian:\n\n- Jenis: Selempang Samping\n- Bahan: ${calcMaterial}\n- Pinggiran: ${calcBorder}\n- Custom Logo: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n- Estimasi Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon informasi selanjutnya untuk pengisian data nama dan gelar. Terima kasih!`;
+        const borderDetailInput = calcBorder === "Pita"
+          ? `- Warna Kain: ...\n- Warna Pita: ...\n- Warna Tulisan: ...`
+          : `- Warna Kain: ...\n- Warna Renda (Gold/Silver): ...\n- Warna Tulisan: ...`;
+
+        message = `Halo Kak, saya mau pesan selempang wisuda:\n\nDetail Pilihan:\n- Model: Selempang Samping\n- Bahan Kain: ${calcMaterial}\n- List: ${calcBorder}\n- Pakai Logo Instansi: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n\nDetail Selempang (Mohon diisi):\n- Nama & Gelar: ...\n${borderDetailInput}\n\nTotal Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon dibantu proses ya Kak. Terima kasih!`;
       } else {
-        message = `Halo Dins Selempang, saya ingin memesan Selempang Kalung custom dengan rincian:\n\n- Jenis: Selempang Kalung (Bahan Beludru)\n- Model: ${calcKalungModel}\n- Waktu Pengerjaan: ${calcExpress ? "Express 1 Hari (+Rp 15.000)" : "Normal (2-3 Hari)"}\n- Estimasi Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon informasi selanjutnya untuk pengisian data nama dan gelar. Terima kasih!`;
+        const borderDetailInput = calcKalungModel !== "Tanpa List"
+          ? `- Warna Kain Beludru: ...\n- Warna List: ...\n- Warna Tulisan: ...`
+          : `- Warna Kain Beludru: ...\n- Warna Tulisan: ...`;
+
+        message = `Halo Kak, saya mau pesan selempang wisuda:\n\nDetail Pilihan:\n- Model: Selempang Kalung\n- Variasi: ${calcKalungModel}\n- Pakai Logo Instansi: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n\nDetail Selempang (Mohon diisi):\n- Tulisan Kanan: ...\n- Tulisan Kiri: ...\n${borderDetailInput}\n\nTotal Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon dibantu proses ya Kak. Terima kasih!`;
       }
     } else {
       message = "Halo Dins Selempang, saya tertarik dengan produk selempang wisuda Anda dan ingin melakukan konsultasi pemesanan.";
@@ -709,13 +716,13 @@ export default function Home() {
                           <label className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 p-3 rounded-xl cursor-pointer">
                             <input
                               type="checkbox"
-                              checked={calcExpress}
-                              onChange={(e) => setCalcExpress(e.target.checked)}
+                              checked={calcLogo}
+                              onChange={(e) => setCalcLogo(e.target.checked)}
                               className="rounded border-zinc-700 text-blue-500 focus:ring-blue-500 h-4 w-4 bg-[#03050d]"
                             />
                             <div className="text-xs text-zinc-300 flex-1">
-                              <div className="font-semibold text-white">Pengerjaan Kilat (1 Hari Jadi)</div>
-                              <div>+Rp 15.000 (Normal: 2-3 hari)</div>
+                              <div className="font-semibold text-white">Custom Logo Sekolah/Universitas</div>
+                              <div>+Rp 10.000 (Dibordir berwarna)</div>
                             </div>
                           </label>
                         </div>
@@ -760,10 +767,10 @@ export default function Home() {
                               Rp {(calcKalungModel === "Double Beludru" ? 80000 : calcKalungModel === "Batik Double Beludru" ? 90000 : 75000).toLocaleString("id-ID")}
                             </span>
                           </div>
-                          {calcExpress && (
-                            <div className="flex justify-between text-xs text-zinc-400 text-blue-300 font-sans">
-                              <span>+ Pengerjaan Kilat (1 Hari)</span>
-                              <span>Rp 15.000</span>
+                          {calcLogo && (
+                            <div className="flex justify-between text-xs text-zinc-400 font-sans">
+                              <span>+ Custom Logo</span>
+                              <span>Rp 10.000</span>
                             </div>
                           )}
                         </>
@@ -817,7 +824,7 @@ export default function Home() {
             {/* WhatsApp Contact Card */}
             <RevealOnScroll delay={0}>
               <a
-                href="https://wa.me/6285741007890?text=Halo%20Dins%20Selempang,%20saya%20tertarik%20dengan%20produk%20selempang%20wisuda%20Anda."
+                href="https://wa.me/6288212803947?text=Halo%20Dins%20Selempang,%20saya%20tertarik%20dengan%20produk%20selempang%20wisuda%20Anda."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-300 h-full"
