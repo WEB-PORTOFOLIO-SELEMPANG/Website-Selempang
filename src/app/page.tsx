@@ -838,7 +838,7 @@ export default function Home() {
             {/* Instagram Contact Card */}
             <RevealOnScroll delay={150}>
               <a
-                href="https://instagram.com/dins.selempang"
+                href="https://www.instagram.com/selempang_pamulang?igsh=bHJ3OGlkajFzeTc0"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 h-full"
@@ -859,7 +859,7 @@ export default function Home() {
             {/* Shopee Contact Card */}
             <RevealOnScroll delay={300}>
               <a
-                href="https://shopee.co.id/dins.selempang"
+                href="https://shopee.co.id/dinzselempang"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-orange-500/30 hover:bg-orange-500/5 transition-all duration-300 h-full"
