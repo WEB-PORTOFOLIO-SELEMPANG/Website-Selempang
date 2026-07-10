@@ -153,7 +153,7 @@ export default function Home() {
 
             <RevealOnScroll delay={200}>
               <p className="mx-auto max-w-2xl text-base sm:text-lg text-zinc-300 font-light md:text-xl leading-relaxed px-2">
-                &ldquo;Mengukir Prestasi, Merayakan Dedikasi — Selempang Premium untuk Momen Spesial Anda.&rdquo;
+                Setiap Perjuangan Layak Dirayakan dengan Selempang Premium untuk Momen Terbaik Anda.
               </p>
             </RevealOnScroll>
 
