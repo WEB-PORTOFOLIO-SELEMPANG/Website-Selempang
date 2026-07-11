@@ -3,47 +3,67 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-// Sample sash products data
+// Sample sash products data (Updated with new prices and categories)
 const PRODUCTS = [
   {
     id: 1,
-    name: "Selempang Satin Ribbon Gold",
-    material: "Satin",
+    name: "Selempang Samping Beludru Ribbon Silver",
+    material: "Beludru",
     border: "Pita",
-    price: 35000,
-    image: "/sash_satin_ribbon.jpg",
-    description: "Selempang dengan bahan Satin Premium warna merah muda (pink) yang berkilau anggun. Dilengkapi bordir emas yang presisi tinggi dan border pita (ribbon) satin emas yang minimalis modern.",
-    features: ["Bahan Satin Kilau Mewah", "Border Pita Emas", "Bordir Rapi", "Satu Lapis Kain (Tanpa Furing)"]
+    price: 40000,
+    image: "/sash_velvet_ribbon.jpg",
+    description: "Selempang samping bahan Beludru Premium warna marun bertekstur tebal dan mewah. Dilengkapi bordir benang perak (silver) presisi tinggi dan list pita perak minimalis modern.",
+    features: ["Bahan Beludru Marun Premium", "List Pita Perak Minimalis", "Bordir Rapi Perak", "Model Samping / Bahu"]
   },
   {
     id: 2,
-    name: "Selempang Velvet Lace Royal Blue",
-    material: "Beludru",
+    name: "Selempang Samping Satin Renda Wisuda Khotmul",
+    material: "Satin",
     border: "Renda",
-    price: 60000,
-    image: "/sash_velvet_lace.jpg",
-    description: "Selempang Beludru Mewah berwarna biru dongker (navy blue) bertekstur tebal dan lembut. Dilengkapi border renda (lace) emas klasik berornamen mewah serta penutup furing belakang agar benang bordir tidak terlihat.",
-    features: ["Bahan Beludru Tebal Premium", "Border Renda Klasik Emas", "Bordir Tebal", "Double Layer dengan Furing Belakang"]
+    price: 50000,
+    image: "/sash_wisuda_khotmul.jpg",
+    description: "Selempang samping bahan Satin Premium warna navy blue berkilau. Dilengkapi bordir benang emas dan list renda rajut emas klasik yang anggun.",
+    features: ["Bahan Satin Kilau Premium", "List Renda Rajut Klasik", "Bordir Emas Presisi", "Model Samping / Bahu"]
   },
   {
     id: 3,
-    name: "Selempang Satin Lace Gold Black",
-    material: "Satin",
-    border: "Renda",
-    price: 45000,
-    image: "/material_satin.jpg",
-    description: "Sash satin premium dengan sentuhan renda emas berornamen klasik. Memberikan kombinasi kilauan satin yang elegan dipadu dengan detail pinggiran renda yang megah.",
-    features: ["Bahan Satin Mengkilap", "Border Renda Klasik", "Custom Nama/Gelar", "Double Layer dengan Furing"]
+    name: "Selempang Samping Beludru Lulusan Terbaik",
+    material: "Beludru",
+    border: "Pita",
+    price: 40000,
+    image: "/sash_lulusan_terbaik.jpg",
+    description: "Selempang samping bahan Beludru Premium hitam pekat bertekstur tebal dan mewah. Dilengkapi bordir benang perak presisi tinggi dan list pita perak minimalis.",
+    features: ["Bahan Beludru Hitam Premium", "List Pita Perak", "Bordir Rapi Perak", "Model Samping / Bahu"]
   },
   {
     id: 4,
-    name: "Selempang Velvet Ribbon Emerald",
-    material: "Beludru",
+    name: "Selempang Samping Satin Birthday Queen",
+    material: "Satin",
     border: "Pita",
-    price: 50000,
-    image: "/material_velvet.jpg",
-    description: "Selempang beludru hitam pekat dengan border pita minimalis. Tekstur beludru yang menyerap cahaya dipadu dengan pita mengkilap memberikan kontras yang sangat premium dan modern.",
-    features: ["Bahan Beludru Premium", "Border Pita Satin", "Tulisan Bordir Kontras", "Satu Lapis Kain"]
+    price: 40000,
+    image: "/sash_birthday_queen.jpg",
+    description: "Selempang samping bahan Satin Premium warna merah muda (pink) berkilau manis. Dilengkapi bordir benang hitam dan ornamen mahkota untuk perayaan ulang tahun.",
+    features: ["Bahan Satin Kilau Premium", "Ornamen Mahkota Custom", "Bordir Hitam Elegan", "Cocok untuk Birthday Event"]
+  },
+  {
+    id: 5,
+    name: "Selempang Kalung Beludru Rina Cumlaude",
+    material: "Beludru",
+    border: "Double Beludru",
+    price: 80000,
+    image: "/sash_kalung_cumlaude.jpg",
+    description: "Selempang kalung (V-Neck) bahan Beludru Premium navy blue dengan tulisan Cumlaude emas serta logo instansi bordir berwarna rapi.",
+    features: ["Model Kalung (V-Neck)", "Bahan Beludru Navy Blue", "Bordir Emas Cumlaude", "Custom Logo Berwarna"]
+  },
+  {
+    id: 6,
+    name: "Selempang Kalung Beludru Aiman Silver",
+    material: "Beludru",
+    border: "Pakai List",
+    price: 75000,
+    image: "/sash_kalung_aiman.jpg",
+    description: "Selempang kalung (V-Neck) bahan Beludru Premium hitam pekat dengan bordir perak, list pita perak membingkai seluruh sisi dada, dan logo instansi berwarna.",
+    features: ["Model Kalung (V-Neck)", "Bahan Beludru Hitam Pekat", "Bordir Perak Presisi", "Custom Logo Berwarna"]
   }
 ];
 
@@ -92,58 +112,67 @@ function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode; de
 }
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("Semua");
 
   // Calculator State
+  const [calcType, setCalcType] = useState("Samping"); // Samping or Kalung
   const [calcMaterial, setCalcMaterial] = useState("Satin");
   const [calcBorder, setCalcBorder] = useState("Pita");
   const [calcLogo, setCalcLogo] = useState(false);
-  const [calcDoubleLayer, setCalcDoubleLayer] = useState(false);
-  const [calcExpress, setCalcExpress] = useState(false);
+  const [calcKalungModel, setCalcKalungModel] = useState("Tanpa List");
 
-  // Calculate sash price dynamically
+  // Calculate sash price dynamically based on new user pricing structure
   const calculatePrice = () => {
-    let base = 0;
-    if (calcMaterial === "Satin") {
-      base = calcBorder === "Pita" ? 35000 : 45000;
+    if (calcType === "Samping") {
+      let base = 40000;
+      if (calcBorder === "Renda") base += 10000;
+      if (calcLogo) base += 10000;
+      return base;
     } else {
-      // Beludru
-      base = calcBorder === "Pita" ? 50000 : 60000;
+      // Selempang Kalung
+      let base = 75000;
+      if (calcKalungModel === "Double Beludru") base = 80000;
+      if (calcKalungModel === "Batik Double Beludru") base = 90000;
+      if (calcLogo) base += 10000;
+      return base;
     }
-
-    if (calcLogo) base += 10000;
-    if (calcDoubleLayer) base += 10000;
-    if (calcExpress) base += 15000;
-
-    return base;
   };
 
   // Generate WA custom order link
   const getWhatsAppLink = (isCalc = false) => {
-    const phone = "6285741007890"; // WhatsApp number format
+    const phone = "6288212803947"; // WhatsApp number format
     let message = "";
     if (isCalc) {
-      message = `Halo Dins Selempang, saya ingin memesan selempang custom dengan rincian:\n\n- Bahan: ${calcMaterial}\n- Pinggiran: ${calcBorder}\n- Custom Logo: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n- Lapis Furing Belakang: ${calcDoubleLayer ? "Ya (+Rp 10.000)" : "Tidak"}\n- Waktu Pengerjaan: ${calcExpress ? "Express 1 Hari (+Rp 15.000)" : "Normal (2-3 Hari)"}\n- Estimasi Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon informasi selanjutnya untuk pengisian data nama dan gelar. Terima kasih!`;
+      if (calcType === "Samping") {
+        const borderDetailInput = calcBorder === "Pita"
+          ? `- Warna Kain: ...\n- Warna Pita: ...\n- Warna Tulisan: ...`
+          : `- Warna Kain: ...\n- Warna Renda (Gold/Silver): ...\n- Warna Tulisan: ...`;
+
+        message = `Halo Kak, saya mau pesan selempang wisuda:\n\nDetail Pilihan:\n- Model: Selempang Samping\n- Bahan Kain: ${calcMaterial}\n- List: ${calcBorder}\n- Pakai Logo Instansi: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n\nDetail Selempang (Mohon diisi):\n- Nama & Gelar: ...\n${borderDetailInput}\n\nTotal Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon dibantu proses ya Kak. Terima kasih!`;
+      } else {
+        const borderDetailInput = calcKalungModel !== "Tanpa List"
+          ? `- Warna Kain Beludru: ...\n- Warna List: ...\n- Warna Tulisan: ...`
+          : `- Warna Kain Beludru: ...\n- Warna Tulisan: ...`;
+
+        message = `Halo Kak, saya mau pesan selempang wisuda:\n\nDetail Pilihan:\n- Model: Selempang Kalung\n- Variasi: ${calcKalungModel}\n- Pakai Logo Instansi: ${calcLogo ? "Ya (+Rp 10.000)" : "Tidak"}\n\nDetail Selempang (Mohon diisi):\n- Tulisan Kanan: ...\n- Tulisan Kiri: ...\n${borderDetailInput}\n\nTotal Harga: Rp ${calculatePrice().toLocaleString("id-ID")}\n\nMohon dibantu proses ya Kak. Terima kasih!`;
+      }
     } else {
       message = "Halo Dins Selempang, saya tertarik dengan produk selempang wisuda Anda dan ingin melakukan konsultasi pemesanan.";
     }
     return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   };
 
-  const filteredProducts = activeTab === "Semua" 
-    ? PRODUCTS 
-    : PRODUCTS.filter(p => p.material === activeTab);
+
 
   return (
     <div className="min-h-screen bg-[#050814] text-zinc-100 font-sans selection:bg-blue-600 selection:text-white scroll-smooth overflow-x-hidden">
-      
+
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
+
         {/* 2. HERO / HOME SECTION - min-h-screen fits hero perfectly */}
         <section id="home" className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center text-center py-16">
           {/* Subtle Solid Blue Backdrop Glow */}
           <div className="absolute top-1/2 left-1/2 -z-10 h-[300px] sm:h-[400px] w-[500px] sm:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-900/10 blur-[100px] sm:blur-[120px]" />
-          
+
           <div className="max-w-4xl space-y-6">
             <RevealOnScroll delay={0}>
               <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
@@ -153,7 +182,7 @@ export default function Home() {
 
             <RevealOnScroll delay={200}>
               <p className="mx-auto max-w-2xl text-base sm:text-lg text-zinc-300 font-light md:text-xl leading-relaxed px-2">
-                &ldquo;Mengukir Prestasi, Merayakan Dedikasi — Selempang Premium untuk Momen Spesial Anda.&rdquo;
+                Setiap Perjuangan Layak Dirayakan dengan Selempang Premium untuk Momen Terbaik Anda.
               </p>
             </RevealOnScroll>
 
@@ -165,14 +194,14 @@ export default function Home() {
 
             <RevealOnScroll delay={500}>
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 pt-4 sm:pt-6">
-                <a 
-                  href="#calculator" 
+                <a
+                  href="#calculator"
                   className="rounded-full bg-blue-600 hover:bg-blue-500 px-6 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:scale-105"
                 >
                   Buat Desain & Cek Harga
                 </a>
-                <a 
-                  href="#gallery" 
+                <a
+                  href="#gallery"
                   className="rounded-full bg-zinc-900 border border-zinc-700 hover:border-zinc-500 px-6 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-zinc-800"
                 >
                   Lihat Galeri
@@ -186,7 +215,7 @@ export default function Home() {
             <div className="mt-12 sm:mt-20 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4 w-full max-w-4xl px-2">
               <div className="rounded-2xl bg-zinc-900/50 border border-zinc-800/80 p-4 sm:p-6 backdrop-blur-sm text-center hover:border-zinc-700 transition-colors">
                 <div className="text-blue-400 text-2xl sm:text-3xl font-bold mb-1">100%</div>
-                <div className="text-zinc-400 text-[10px] sm:text-xs uppercase tracking-wider font-semibold">Bordir</div>
+                <div className="text-zinc-400 text-[10px] sm:text-xs uppercase tracking-wider font-semibold">Bordir Premium</div>
               </div>
               <div className="rounded-2xl bg-zinc-900/50 border border-zinc-800/80 p-4 sm:p-6 backdrop-blur-sm text-center hover:border-zinc-700 transition-colors">
                 <div className="text-blue-400 text-2xl sm:text-3xl font-bold mb-1">Premium</div>
@@ -214,13 +243,13 @@ export default function Home() {
                 </h2>
                 <div className="text-zinc-300 text-xs sm:text-sm font-light space-y-4 leading-relaxed">
                   <p>
-                    Dins Selempang didirikan pada awal tahun 2021 dengan misi sederhana: memberikan apresiasi tertinggi bagi mereka yang telah berjuang menuntut ilmu atau meraih prestasi terbaik. Kami sadar bahwa selempang bukan sekadar kain, melainkan simbol kebanggaan dan kerja keras bertahun-tahun.
+                    Dins Selempang didirikan pada awal tahun 2021 dengan misi sederhana yaitu memberikan apresiasi tertinggi bagi mereka yang telah berjuang menuntut ilmu atau meraih prestasi terbaik. Kami sadar bahwa selempang bukan sekadar kain, melainkan simbol kebanggaan dan kerja keras bertahun-tahun.
                   </p>
                   <p>
                     Dimulai dari produksi rumahan berskala kecil, kami berkomitmen untuk selalu mempertahankan kualitas jahitan dan kerapian bordir. Berkat kepercayaan ribuan wisudawan, Dins Selempang kini telah tumbuh menjadi produsen selempang andalan bagi mahasiswa di berbagai universitas besar di Indonesia, pageant event, hingga penghargaan instansi.
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-2">
                   <div className="flex gap-2 sm:gap-3">
                     <div className="h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">
@@ -247,12 +276,12 @@ export default function Home() {
                 </div>
               </div>
             </RevealOnScroll>
-            
+
             <RevealOnScroll delay={200}>
               {/* Controlled aspect/height for mobile phone screen sizes */}
               <div className="relative w-full h-64 sm:h-80 md:h-auto md:aspect-square rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent z-10" />
-                <Image 
+                <Image
                   src="/sash_satin_ribbon.jpg"
                   alt="Produk Dins Selempang"
                   fill
@@ -278,14 +307,14 @@ export default function Home() {
             </div>
           </RevealOnScroll>
 
-          {/* Grid of Materials (Satin vs Beludru) - Reverted to clean vertical stack on mobile */}
+          {/* Grid of Materials (Satin vs Beludru) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-16">
-            
+
             {/* Satin Card */}
             <RevealOnScroll delay={100}>
               <div className="group rounded-3xl bg-zinc-900/30 border border-zinc-800/80 overflow-hidden hover:border-blue-500/30 transition-all duration-300">
                 <div className="relative w-full h-48 sm:h-64 md:aspect-[16/9] overflow-hidden rounded-t-3xl bg-[#03050d]">
-                  <Image 
+                  <Image
                     src="/material_satin.jpg"
                     alt="Bahan Satin Premium"
                     fill
@@ -312,9 +341,9 @@ export default function Home() {
 
             {/* Velvet Card */}
             <RevealOnScroll delay={250}>
-              <div className="group rounded-3xl bg-zinc-900/30 border border-zinc-800/80 overflow-hidden hover:border-red-500/30 transition-all duration-300">
+              <div className="group rounded-3xl bg-zinc-900/30 border border-zinc-800/80 overflow-hidden hover:border-blue-500/30 transition-all duration-300">
                 <div className="relative w-full h-48 sm:h-64 md:aspect-[16/9] overflow-hidden rounded-t-3xl bg-[#03050d]">
-                  <Image 
+                  <Image
                     src="/material_velvet.jpg"
                     alt="Bahan Beludru Premium"
                     fill
@@ -322,7 +351,7 @@ export default function Home() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
-                  <span className="absolute bottom-4 left-4 bg-red-600 text-white font-bold text-[10px] sm:text-xs uppercase px-2.5 py-1.5 rounded-full">
+                  <span className="absolute bottom-4 left-4 bg-blue-600 text-white font-bold text-[10px] sm:text-xs uppercase px-2.5 py-1.5 rounded-full">
                     Karakter: Tebal & Matte
                   </span>
                 </div>
@@ -345,24 +374,24 @@ export default function Home() {
             <div className="bg-zinc-900/40 border border-zinc-800 p-6 sm:p-8 rounded-3xl">
               <h3 className="text-lg sm:text-xl font-bold text-white text-center mb-6 sm:mb-8">Pilihan List / Pinggiran Selempang</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x divide-zinc-800">
-                
+
                 {/* Ribbon Border Option */}
                 <div className="space-y-3 sm:space-y-4 pb-4 md:pb-0 md:pr-8">
                   <div className="flex items-center gap-3">
                     <h4 className="text-base sm:text-lg font-bold text-blue-400">List Pita (Ribbon Border)</h4>
                   </div>
                   <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-light font-sans">
-                    Pinggiran diselematkan menggunakan pita satin dengan lebar 1 cm yang mengelilingi seluruh kain selempang. Model ini memberikan garis batas yang tegas, rapi, dan bernuansa minimalis modern. Pilihan paling tepat untuk Anda yang menyukai gaya elegan yang simpel dan modern.
+                    Pinggiran disematkan menggunakan pita satin dengan lebar 1 cm yang mengelilingi seluruh kain selempang. Model ini memberikan garis batas yang tegas, rapi, dan bernuansa minimalis modern. Pilihan paling tepat untuk Anda yang menyukai gaya elegan yang simpel dan modern.
                   </p>
                 </div>
 
                 {/* Lace Border Option */}
                 <div className="space-y-3 sm:space-y-4 pt-4 md:pt-0 md:pl-8">
                   <div className="flex items-center gap-3">
-                    <h4 className="text-base sm:text-lg font-bold text-red-400">List Renda (Lace Border)</h4>
+                    <h4 className="text-base sm:text-lg font-bold text-blue-400">List Renda (Lace Border)</h4>
                   </div>
                   <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-light font-sans">
-                    Pinggiran dihiasi dengan renda rajut bermotif klasik yang mewah. Renda dipasang melingkari seluruh sisi selempang, memberikan kesan tradisional yang anggun, prestisius, dan megah. Sangat direkomendasikan untuk wisuda universitas negeri atau upacara formal kerajaan/kontes kecantikan.
+                    Pinggiran dihiasi dengan renda rajut bermotif klasik yang mewah. Renda dipasang melingkari seluruh sisi selempang, memberikan kesan tradisional yang anggun, prestisius, dan megah. Sangat direkomendasikan untuk wisuda universitas negeri atau upacara formal kontes kecantikan.
                   </p>
                 </div>
 
@@ -371,7 +400,7 @@ export default function Home() {
           </RevealOnScroll>
         </section>
 
-        {/* 5. GALLERY / SHOWCASE SECTION */}
+         {/* 5. GALLERY / SHOWCASE SECTION */}
         <section id="gallery" className="relative py-16 md:py-24 border-t border-zinc-900">
           <RevealOnScroll delay={0}>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
@@ -379,292 +408,222 @@ export default function Home() {
                 <h2 className="text-2xl sm:text-3xl font-bold text-white sm:text-4xl font-sans">Galeri Selempang Pilihan</h2>
                 <p className="text-zinc-400 text-xs sm:text-sm mt-1">Beberapa hasil produksi nyata dari Dins Selempang.</p>
               </div>
-              
-              {/* Filter Tabs */}
-              <div className="flex bg-zinc-900 border border-zinc-800 p-1 rounded-full self-start md:self-auto">
-                {["Semua", "Satin", "Beludru"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`rounded-full px-4 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold tracking-wide transition-all ${
-                      activeTab === tab 
-                        ? "bg-blue-600 text-white shadow" 
-                        : "text-zinc-400 hover:text-white"
-                    }`}
-                  >
-                    {tab === "Semua" ? "Semua Bahan" : `Bahan ${tab}`}
-                  </button>
-                ))}
-              </div>
             </div>
           </RevealOnScroll>
 
-          {/* Grid Products - Reverted to clean vertical stack on mobile */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {filteredProducts.map((product, index) => (
+          {/* Grid Products - Clean, compact picture grid for showcasing sashes */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {PRODUCTS.map((product, index) => (
               <RevealOnScroll key={product.id} delay={index * 150}>
-                <div className="group flex flex-col bg-zinc-900/40 border border-zinc-800/80 rounded-3xl overflow-hidden hover:border-blue-500/40 transition-all duration-300 h-full">
-                  <div className="relative w-full h-56 sm:h-72 md:h-auto md:aspect-square overflow-hidden rounded-t-3xl bg-[#03050d]">
-                    <Image 
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-4 right-4 flex gap-2">
-                      <span className="bg-[#03050d]/80 backdrop-blur-sm border border-zinc-800 text-blue-400 text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 rounded-full">
-                        Bahan: {product.material}
-                      </span>
-                      <span className="bg-[#03050d]/80 backdrop-blur-sm border border-zinc-800 text-red-400 text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 rounded-full">
-                        List: {product.border}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-4">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-start gap-2">
-                        <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-blue-400 transition-colors font-sans leading-tight">
-                          {product.name}
-                        </h3>
-                        <span className="text-base sm:text-lg font-extrabold text-white font-sans shrink-0">
-                          Rp {product.price.toLocaleString("id-ID")}
-                        </span>
-                      </div>
-                      <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-light font-sans">
-                        {product.description}
-                      </p>
-                      
-                      {/* Features list - grid grid-cols-1 sm:grid-cols-2 prevents text overlaps on mobile */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 sm:pt-2">
-                        {product.features.map((feat, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 text-[11px] sm:text-xs text-zinc-400">
-                            <span className="text-blue-500 font-bold shrink-0">•</span>
-                            <span className="truncate">{feat}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-zinc-800/60 flex items-center justify-between">
-                      <span className="text-[10px] sm:text-xs text-zinc-500 font-sans">Estimasi: 2-3 hari</span>
-                      <a
-                        href={`https://wa.me/6285741007890?text=${encodeURIComponent(
-                          `Halo Dins Selempang, saya tertarik memesan model: ${product.name} (Rp ${product.price.toLocaleString("id-ID")})`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-colors"
-                      >
-                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24">
-                          <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.185-1.359a9.95 9.95 0 004.822 1.233h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.037-5.176-2.922-7.062A9.92 9.92 0 0012.012 2zm6.935 14.18c-.28.788-1.634 1.453-2.244 1.517-.542.057-1.25.077-3.619-.899-3.033-1.25-4.992-4.329-5.143-4.53-.15-.2-.1.979-1.21-1.35-.989-1.897-.08-2.905-.443-3.279-.28-.288-.61-.36-.813-.36-.203 0-.406 0-.584.009-.183.01-.482.072-.736.353-.254.28-.97.948-.97 2.31 0 1.361.99 2.678 1.13 2.868.14.19 1.948 2.973 4.72 4.17 2.772 1.198 2.772.799 3.28.75.507-.05 1.634-.67 1.863-1.312.228-.64.228-1.189.16-1.303-.07-.113-.254-.183-.532-.323z"/>
-                        </svg>
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
+                <div className="group relative w-full aspect-square overflow-hidden rounded-2xl bg-[#03050d] border border-zinc-800/80 hover:border-blue-500/40 transition-all duration-300">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
               </RevealOnScroll>
             ))}
           </div>
         </section>
 
-        {/* 6. PRICE TABLE SECTION */}
+        {/* 6. PRICE TABLE SECTION (Re-designed with new pricing structures) */}
         <section id="pricing" className="relative py-16 md:py-24 border-t border-zinc-900">
           <RevealOnScroll delay={0}>
             <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
               <h2 className="text-2xl sm:text-3xl font-bold text-white sm:text-4xl font-sans">Daftar Harga & Model</h2>
-              <p className="text-zinc-400 text-xs sm:text-sm mt-2">Skema harga transparan berdasarkan jenis bahan dan ornamen pinggiran. Bebas pilih warna!</p>
+              <p className="text-zinc-400 text-xs sm:text-sm mt-2">Daftar harga selempang berdasarkan jenis model dan bahan. Bebas pilih warna kain & tulisan!</p>
             </div>
           </RevealOnScroll>
 
-          {/* Pricing Grid - Grid columns snap from 1 to 2 to 4 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-            
-            {/* Tier 1: Satin Pita */}
+          {/* Pricing Grid - 2 Column comparative Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+
+            {/* Selempang Samping Card */}
             <RevealOnScroll delay={0}>
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-5 sm:p-6 flex flex-col justify-between hover:border-zinc-700 transition-all h-full">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 sm:p-8 hover:border-zinc-700 transition-all">
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-300">Satin Pita</h3>
-                  <p className="text-[10px] sm:text-xs text-zinc-500 mt-1">Ekonomis & Minimalis</p>
-                  <div className="mt-3 sm:mt-4 flex items-baseline">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-white">Rp 35.000</span>
-                    <span className="text-[10px] sm:text-xs text-zinc-400 ml-1">/pcs</span>
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-white">Selempang Samping (Biasa)</h3>
                   </div>
-                  <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 text-[10px] sm:text-xs text-zinc-400 border-t border-zinc-800 pt-4 sm:pt-6">
-                    <li className="flex items-center gap-2">- Bahan Satin Premium</li>
-                    <li className="flex items-center gap-2">- Border Pita Satin (1cm)</li>
-                    <li className="flex items-center gap-2">- Bordir (1 Sisi)</li>
-                    <li className="flex items-center gap-2">- Tanpa Furing Belakang</li>
-                  </ul>
+                  <p className="text-xs text-zinc-400 mb-6">Model selempang wisuda/kontes klasik yang dikenakan menyamping di pundak. Tersedia bahan Satin Premium & Beludru.</p>
+
+                  <div className="space-y-4 border-t border-zinc-800 pt-6">
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Bahan Satin / Beludru (Pita)</p>
+                        <p className="text-[10px] text-zinc-500">Model polos dengan list pita tepi 1cm</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 40.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Satin / Beludru + Renda</p>
+                        <p className="text-[10px] text-zinc-500">Model pinggiran renda rajut klasik mewah</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 50.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Satin / Beludru + Logo</p>
+                        <p className="text-[10px] text-zinc-500">Ditambah bordir logo instansi/sekolah berwarna</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 50.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Satin / Beludru + Logo + Renda</p>
+                        <p className="text-[10px] text-zinc-500">Model terlengkap & termewah untuk selempang samping</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 60.000</span>
+                    </div>
+                  </div>
                 </div>
-                <a 
-                  href={getWhatsAppLink()} 
-                  className="mt-6 sm:mt-8 block w-full rounded-xl bg-zinc-800 hover:bg-zinc-700 text-center py-2.5 text-xs font-bold text-white transition-colors"
-                >
-                  Pilih Model Ini
-                </a>
               </div>
             </RevealOnScroll>
 
-            {/* Tier 2: Satin Renda */}
-            <RevealOnScroll delay={100}>
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-5 sm:p-6 flex flex-col justify-between hover:border-zinc-700 transition-all h-full">
+            {/* Selempang Kalung Card */}
+            <RevealOnScroll delay={150}>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 sm:p-8 hover:border-zinc-700 transition-all">
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-300">Satin Renda</h3>
-                  <p className="text-[10px] sm:text-xs text-zinc-500 mt-1 font-sans">Klasik & Anggun</p>
-                  <div className="mt-3 sm:mt-4 flex items-baseline">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-white">Rp 45.000</span>
-                    <span className="text-[10px] sm:text-xs text-zinc-400 ml-1">/pcs</span>
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-white">Selempang Kalung (Neck Sash)</h3>
                   </div>
-                  <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 text-[10px] sm:text-xs text-zinc-400 border-t border-zinc-800 pt-4 sm:pt-6">
-                    <li className="flex items-center gap-2">- Bahan Satin Premium</li>
-                    <li className="flex items-center gap-2">- Border Renda Rajut</li>
-                    <li className="flex items-center gap-2">- Bordir (1 Sisi)</li>
-                    <li className="flex items-center gap-2">- Lapis Furing Belakang</li>
-                  </ul>
+                  <p className="text-xs text-zinc-400 mb-6">Model selempang berbentuk kalung V-neck/U-neck yang menggantung melingkar di leher. Memberikan kesan sangat formal dan royal.</p>
+
+                  <div className="space-y-4 border-t border-zinc-800 pt-6">
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Bahan Beludru (Tanpa List)</p>
+                        <p className="text-[10px] text-zinc-500">Bahan beludru tebal polos tanpa jahitan list tepi</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 75.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Bahan Beludru (Pakai List)</p>
+                        <p className="text-[10px] text-zinc-500">Bahan beludru tebal dengan border list pita tepi</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 75.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-zinc-800/40 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Beludru + Lapisan (Double Beludru)</p>
+                        <p className="text-[10px] text-zinc-500">Dua lapis beludru tebal depan-belakang (kaku & kokoh)</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 80.000</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 gap-4">
+                      <div>
+                        <p className="font-semibold text-zinc-300 text-xs sm:text-sm">Beludru + Batik + Lapisan (Double)</p>
+                        <p className="text-[10px] text-zinc-500">Variasi aksen batik nusantara dengan double beludru kaku</p>
+                      </div>
+                      <span className="text-lg font-bold text-white font-sans shrink-0">Rp 90.000</span>
+                    </div>
+                  </div>
                 </div>
-                <a 
-                  href={getWhatsAppLink()} 
-                  className="mt-6 sm:mt-8 block w-full rounded-xl bg-zinc-800 hover:bg-zinc-700 text-center py-2.5 text-xs font-bold text-white transition-colors"
-                >
-                  Pilih Model Ini
-                </a>
               </div>
             </RevealOnScroll>
-
-            {/* Tier 3: Beludru Pita */}
-            <RevealOnScroll delay={200}>
-              <div className="relative rounded-2xl border-2 border-blue-600 bg-zinc-900/40 p-5 sm:p-6 flex flex-col justify-between shadow-lg shadow-blue-500/10 h-full">
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-red-600 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-white">
-                  Paling Populer
-                </span>
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">Beludru Pita</h3>
-                  <p className="text-[10px] sm:text-xs text-blue-400 mt-1 font-sans">Sangat Elegan & Kontras</p>
-                  <div className="mt-3 sm:mt-4 flex items-baseline">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-white">Rp 50.000</span>
-                    <span className="text-[10px] sm:text-xs text-zinc-400 ml-1">/pcs</span>
-                  </div>
-                  <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 text-[10px] sm:text-xs text-zinc-300 border-t border-zinc-800 pt-4 sm:pt-6">
-                    <li className="flex items-center gap-2">- Bahan Beludru Tebal</li>
-                    <li className="flex items-center gap-2">- Border Pita Satin (1cm)</li>
-                    <li className="flex items-center gap-2">- Bordir Tebal</li>
-                    <li className="flex items-center gap-2">- Tanpa Furing Belakang</li>
-                  </ul>
-                </div>
-                <a 
-                  href={getWhatsAppLink()} 
-                  className="mt-6 sm:mt-8 block w-full rounded-xl bg-blue-600 hover:bg-blue-500 text-center py-2.5 text-xs font-extrabold text-white transition-colors animate-pulse"
-                >
-                  Pesan Sekarang
-                </a>
-              </div>
-            </RevealOnScroll>
-
-            {/* Tier 4: Beludru Renda */}
-            <RevealOnScroll delay={300}>
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-5 sm:p-6 flex flex-col justify-between hover:border-zinc-700 transition-all h-full">
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-300">Beludru Renda</h3>
-                  <p className="text-[10px] sm:text-xs text-zinc-500 mt-1 font-sans">Kualitas Royal / Kontes</p>
-                  <div className="mt-3 sm:mt-4 flex items-baseline">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-white">Rp 60.000</span>
-                    <span className="text-[10px] sm:text-xs text-zinc-400 ml-1">/pcs</span>
-                  </div>
-                  <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 text-[10px] sm:text-xs text-zinc-400 border-t border-zinc-800 pt-4 sm:pt-6">
-                    <li className="flex items-center gap-2">- Bahan Beludru Tebal</li>
-                    <li className="flex items-center gap-2">- Border Renda Rajut</li>
-                    <li className="flex items-center gap-2">- Bordir Tebal</li>
-                    <li className="flex items-center gap-2">- Lapis Furing Belakang</li>
-                  </ul>
-                </div>
-                <a 
-                  href={getWhatsAppLink()} 
-                  className="mt-6 sm:mt-8 block w-full rounded-xl bg-zinc-800 hover:bg-zinc-700 text-center py-2.5 text-xs font-bold text-white transition-colors"
-                >
-                  Pilih Model Ini
-                </a>
-              </div>
-            </RevealOnScroll>
-
           </div>
 
           {/* Extra options notes */}
           <RevealOnScroll delay={400}>
-            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/10 p-5 sm:p-6">
+            <div className="max-w-2xl mx-auto rounded-2xl border border-zinc-800/80 bg-zinc-900/10 p-5 sm:p-6 text-center">
               <h4 className="text-xs sm:text-sm font-semibold text-white mb-2">Layanan Tambahan (Optional Add-ons):</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-xs text-zinc-400">
-                <div className="flex gap-2">
-                  <span className="text-blue-500 font-bold shrink-0">-</span>
+              <div className="text-xs text-zinc-400 flex justify-center">
+                <div className="flex items-center gap-2 justify-center">
+                  <span className="text-blue-500 font-bold shrink-0">•</span>
                   <p><strong className="text-zinc-200">Custom Logo Universitas/Sekolah:</strong> +Rp 10.000 / pcs (Bordir berwarna rapi di ujung selempang).</p>
-                </div>
-                <div className="flex gap-2">
-                  <span className="text-blue-500 font-bold shrink-0">-</span>
-                  <p><strong className="text-zinc-200">Lapis Furing Belakang (Penutup):</strong> +Rp 10.000 / pcs (Menutup hasil rajutan benang bordir agar bagian belakang rapi).</p>
-                </div>
-                <div className="flex gap-2">
-                  <span className="text-blue-500 font-bold shrink-0">-</span>
-                  <p><strong className="text-blue-500">Layanan Kilat (1 Hari Selesai):</strong> +Rp 15.000 / pcs (Pengerjaan express selesai dalam 24 jam).</p>
                 </div>
               </div>
             </div>
           </RevealOnScroll>
         </section>
 
-        {/* INTERACTIVE PRICE CALCULATOR */}
+        {/* INTERACTIVE PRICE CALCULATOR (With Dynamic Type Support) */}
         <section id="calculator" className="relative py-16 md:py-24 border-t border-zinc-900">
           <RevealOnScroll delay={0}>
             <div className="max-w-4xl mx-auto bg-zinc-900/30 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl relative">
               <div className="absolute top-0 right-0 h-32 w-32 bg-blue-500/5 blur-3xl rounded-full" />
-              
+
               <div className="text-center md:text-left mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl font-bold text-white mt-1 font-sans">Kalkulator Estimasi Harga Custom</h2>
-                <p className="text-zinc-400 text-xs mt-1 sm:mt-2">Rancang selempang impian Anda dan dapatkan perhitungan biaya secara langsung serta pesan lewat WhatsApp.</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-white mt-1 font-sans">Confirm Pesanan Selempang</h2>
+                <p className="text-zinc-400 text-xs mt-1 sm:mt-2">Rancang selempang impian Anda secara interaktif dan dapatkan rincian biaya yang tepat.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
+
                 {/* Calculator Settings */}
                 <div className="space-y-5 sm:space-y-6">
-                  
-                  {/* 1. Select Material */}
+
+                  {/* 1. Select Type */}
                   <div className="space-y-2">
-                    <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">1. Pilih Bahan Kain</label>
+                    <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">1. Pilih Tipe Selempang</label>
                     <div className="grid grid-cols-2 gap-2 sm:gap-3">
                       <button
-                        onClick={() => setCalcMaterial("Satin")}
+                        onClick={() => setCalcType("Samping")}
                         className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
-                          calcMaterial === "Satin" 
-                            ? "border-blue-500 bg-blue-500/10 text-blue-300" 
+                          calcType === "Samping"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-300"
                             : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
                         }`}
                       >
-                        Satin
+                        Selempang Samping
                       </button>
                       <button
-                        onClick={() => setCalcMaterial("Beludru")}
+                        onClick={() => setCalcType("Kalung")}
                         className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
-                          calcMaterial === "Beludru" 
-                            ? "border-blue-500 bg-blue-500/10 text-blue-300" 
+                          calcType === "Kalung"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-300"
                             : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
                         }`}
                       >
-                        Beludru
+                        Selempang Kalung
                       </button>
                     </div>
                   </div>
 
-                  {/* 2. Select Border */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">2. Pilih Model Pinggiran (List)</label>
-                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                      <button
-                        onClick={() => setCalcBorder("Pita")}
-                        className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
-                          calcBorder === "Pita" 
-                            ? "border-blue-500 bg-blue-500/10 text-blue-300" 
-                            : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                  {calcType === "Samping" ? (
+                    <>
+                      {/* 2. Select Material */}
+                      <div className="space-y-2">
+                        <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">2. Pilih Bahan Kain</label>
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                          <button
+                            onClick={() => setCalcMaterial("Satin")}
+                            className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                              calcMaterial === "Satin"
+                                ? "border-blue-500 bg-blue-500/10 text-blue-300"
+                                : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                            }`}
+                          >
+                            Satin
+                          </button>
+                          <button
+                            onClick={() => setCalcMaterial("Beludru")}
+                            className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                              calcMaterial === "Beludru"
+                                ? "border-blue-500 bg-blue-500/10 text-blue-300"
+                                : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                            }`}
+                          >
+                            Beludru
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* 3. Select Border */}
+                      <div className="space-y-2">
+                        <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">3. Pilih Model Pinggiran (List)</label>
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                          <button
+                            onClick={() => setCalcBorder("Pita")}
+                            className={`py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                              calcBorder === "Pita"
+                                ? "border-blue-500 bg-blue-500/10 text-blue-300"
+                                : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
                         }`}
                       >
                         List Pita
@@ -672,8 +631,8 @@ export default function Home() {
                       <button
                         onClick={() => setCalcBorder("Renda")}
                         className={`py-3 px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
-                          calcBorder === "Renda" 
-                            ? "border-blue-500 bg-blue-500/10 text-blue-300" 
+                          calcBorder === "Renda"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-300"
                             : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
                         }`}
                       >
@@ -682,10 +641,10 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 3. Add-ons */}
+                  {/* 4. Add-ons */}
                   <div className="space-y-3">
-                    <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">3. Layanan Tambahan (Optional)</label>
-                    
+                    <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">4. Layanan Tambahan (Optional)</label>
+
                     <div className="space-y-2">
                       <label className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 p-3 rounded-xl cursor-pointer">
                         <input
@@ -696,37 +655,62 @@ export default function Home() {
                         />
                         <div className="text-xs text-zinc-300 flex-1">
                           <div className="font-semibold text-white">Custom Logo Sekolah/Universitas</div>
-                          <div>+Rp 10.000 (Dibordir presisi)</div>
-                        </div>
-                      </label>
-
-                      <label className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 p-3 rounded-xl cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={calcDoubleLayer}
-                          onChange={(e) => setCalcDoubleLayer(e.target.checked)}
-                          className="rounded border-zinc-700 text-blue-500 focus:ring-blue-500 h-4 w-4 bg-[#03050d]"
-                        />
-                        <div className="text-xs text-zinc-300 flex-1">
-                          <div className="font-semibold text-white">Double Layer (Lapis Furing Belakang)</div>
-                          <div>+Rp 10.000 (Menutup benang rajutan)</div>
-                        </div>
-                      </label>
-
-                      <label className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 p-3 rounded-xl cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={calcExpress}
-                          onChange={(e) => setCalcExpress(e.target.checked)}
-                          className="rounded border-zinc-700 text-blue-500 focus:ring-blue-500 h-4 w-4 bg-[#03050d]"
-                        />
-                        <div className="text-xs text-zinc-300 flex-1">
-                          <div className="font-semibold text-white">Pengerjaan Kilat (1 Hari Jadi)</div>
-                          <div>+Rp 15.000 (Normal: 2-3 hari)</div>
+                          <div>+Rp 10.000 (Dibordir berwarna)</div>
                         </div>
                       </label>
                     </div>
                   </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* 2. Select Kalung Variation */}
+                      <div className="space-y-2">
+                        <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">2. Pilih Model Selempang Kalung</label>
+                        <div className="grid grid-cols-1 gap-2">
+                          {[
+                            { name: "Tanpa List", label: "Beludru Tanpa List (Rp 75.000)" },
+                            { name: "Pakai List", label: "Beludru Pakai List (Rp 75.000)" },
+                            { name: "Double Beludru", label: "Beludru + Lapisan Ganda (Rp 80.000)" },
+                            { name: "Batik Double Beludru", label: "Beludru + Batik + Lapisan Ganda (Rp 90.000)" }
+                          ].map((model) => (
+                            <button
+                              key={model.name}
+                              onClick={() => setCalcKalungModel(model.name)}
+                              className={`py-2.5 px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all text-left flex justify-between items-center ${
+                                calcKalungModel === model.name
+                                  ? "border-blue-500 bg-blue-500/10 text-blue-300"
+                                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                              }`}
+                            >
+                              <span>{model.label}</span>
+                              {calcKalungModel === model.name && (
+                                <span className="h-2 w-2 rounded-full bg-blue-500" />
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 3. Add-ons for Kalung */}
+                      <div className="space-y-3">
+                        <label className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider font-sans">3. Layanan Tambahan (Optional)</label>
+                        <div className="space-y-2">
+                          <label className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 p-3 rounded-xl cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={calcLogo}
+                              onChange={(e) => setCalcLogo(e.target.checked)}
+                              className="rounded border-zinc-700 text-blue-500 focus:ring-blue-500 h-4 w-4 bg-[#03050d]"
+                            />
+                            <div className="text-xs text-zinc-300 flex-1">
+                              <div className="font-semibold text-white">Custom Logo Sekolah/Universitas</div>
+                              <div>+Rp 10.000 (Dibordir berwarna)</div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                 </div>
 
@@ -734,34 +718,47 @@ export default function Home() {
                 <div className="bg-[#03050d] border border-zinc-800 p-5 sm:p-6 rounded-2xl h-full flex flex-col justify-between space-y-6">
                   <div className="space-y-4">
                     <h4 className="text-[10px] sm:text-xs font-bold text-blue-400 uppercase tracking-wider font-sans">Hasil Rincian & Estimasi</h4>
-                    
+
                     <div className="space-y-2.5 text-xs sm:text-sm text-zinc-300">
-                      <div className="flex justify-between">
-                        <span>Bahan ({calcMaterial}) + List ({calcBorder})</span>
-                        <span className="font-semibold text-white font-sans text-right">
-                          Rp {((calcMaterial === "Satin" ? (calcBorder === "Pita" ? 35000 : 45000) : (calcBorder === "Pita" ? 50000 : 60000))).toLocaleString("id-ID")}
-                        </span>
-                      </div>
-                      {calcLogo && (
-                        <div className="flex justify-between text-xs text-zinc-400 font-sans">
-                          <span>+ Custom Logo</span>
-                          <span>Rp 10.000</span>
-                        </div>
-                      )}
-                      {calcDoubleLayer && (
-                        <div className="flex justify-between text-xs text-zinc-400 font-sans">
-                          <span>+ Lapis Furing Belakang</span>
-                          <span>Rp 10.000</span>
-                        </div>
-                      )}
-                      {calcExpress && (
-                        <div className="flex justify-between text-xs text-zinc-400 text-blue-300 font-sans">
-                          <span>+ Pengerjaan Kilat (1 Hari)</span>
-                          <span>Rp 15.000</span>
-                        </div>
+                      {calcType === "Samping" ? (
+                        <>
+                          <div className="flex justify-between">
+                            <span>Selempang Samping ({calcMaterial})</span>
+                            <span className="font-semibold text-white font-sans text-right">
+                              Rp 40.000
+                            </span>
+                          </div>
+                          {calcBorder === "Renda" && (
+                            <div className="flex justify-between text-xs text-zinc-400 font-sans">
+                              <span>+ List Renda</span>
+                              <span>Rp 10.000</span>
+                            </div>
+                          )}
+                          {calcLogo && (
+                            <div className="flex justify-between text-xs text-zinc-400 font-sans">
+                              <span>+ Custom Logo</span>
+                              <span>Rp 10.000</span>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-between">
+                            <span>Selempang Kalung ({calcKalungModel})</span>
+                            <span className="font-semibold text-white font-sans text-right">
+                              Rp {(calcKalungModel === "Double Beludru" ? 80000 : calcKalungModel === "Batik Double Beludru" ? 90000 : 75000).toLocaleString("id-ID")}
+                            </span>
+                          </div>
+                          {calcLogo && (
+                            <div className="flex justify-between text-xs text-zinc-400 font-sans">
+                              <span>+ Custom Logo</span>
+                              <span>Rp 10.000</span>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
-                    
+
                     <div className="border-t border-zinc-800 pt-4 mt-4">
                       <div className="flex justify-between items-baseline">
                         <span className="text-xs sm:text-sm text-zinc-400 font-bold">Total Estimasi:</span>
@@ -780,7 +777,7 @@ export default function Home() {
                       className="w-full flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs sm:text-sm py-3 sm:py-3.5 transition-all shadow-md shadow-blue-500/10"
                     >
                       <svg className="w-4.5 h-4.5 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.185-1.359a9.95(9.95 0 004.822 1.233h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.037-5.176-2.922-7.062A9.92 9.92 0 0012.012 2zm6.935 14.18c-.28.788-1.634 1.453-2.244 1.517-.542.057-1.25.077-3.619-.899-3.033-1.25-4.992-4.329-5.143-4.53-.15-.2-.1.979-1.21-1.35-.989-1.897-.08-2.905-.443-3.279-.28-.288-.61-.36-.813-.36-.203 0-.406 0-.584.009-.183.01-.482.072-.736.353-.254.28-.97.948-.97 2.31 0 1.361.99 2.678 1.13 2.868.14.19 1.948 2.973 4.72 4.17 2.772 1.198 2.772.799 3.28.75.507-.05 1.634-.67 1.863-1.312.228-.64.228-1.189.16-1.303-.07-.113-.254-.183-.532-.323z"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.705 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                       </svg>
                       Kirim Pesanan ke WhatsApp
                     </a>
@@ -803,20 +800,20 @@ export default function Home() {
             </div>
           </RevealOnScroll>
 
-          {/* Grid contacts - clean vertical stack on mobile, 3 columns on desktop */}
+          {/* Grid contacts */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            
+
             {/* WhatsApp Contact Card */}
             <RevealOnScroll delay={0}>
-              <a 
-                href="https://wa.me/6285741007890?text=Halo%20Dins%20Selempang,%20saya%20tertarik%20dengan%20produk%20selempang%20wisuda%20Anda."
+              <a
+                href="https://wa.me/6288212803947?text=Halo%20Dins%20Selempang,%20saya%20tertarik%20dengan%20produk%20selempang%20wisuda%20Anda."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-300 h-full"
               >
                 <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-2xl bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-7 h-7 sm:w-8 sm:h-8 fill-current" viewBox="0 0 24 24">
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.185-1.359a9.95 9.95 0 004.822 1.233h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.037-5.176-2.922-7.062A9.92 9.92 0 0012.012 2zm6.935 14.18c-.28.788-1.634 1.453-2.244 1.517-.542.057-1.25.077-3.619-.899-3.033-1.25-4.992-4.329-5.143-4.53-.15-.2-.1.979-1.21-1.35-.989-1.897-.08-2.905-.443-3.279-.28-.288-.61-.36-.813-.36-.203 0-.406 0-.584.009-.183.01-.482.072-.736.353-.254.28-.97.948-.97 2.31 0 1.361.99 2.678 1.13 2.868.14.19 1.948 2.973 4.72 4.17 2.772 1.198 2.772.799 3.28.75.507-.05 1.634-.67 1.863-1.312.228-.64.228-1.189.16-1.303-.07-.113-.254-.183-.532-.323z"/>
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.705 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                   </svg>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-green-400 transition-colors font-sans">WhatsApp Chat</h3>
@@ -829,42 +826,41 @@ export default function Home() {
 
             {/* Instagram Contact Card */}
             <RevealOnScroll delay={150}>
-              <a 
-                href="https://instagram.com/dins.selempang"
+              <a
+                href="https://www.instagram.com/selempang_pamulang?igsh=bHJ3OGlkajFzeTc0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-red-500/30 hover:bg-red-500/5 transition-all duration-300 h-full"
+                className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 h-full"
               >
-                <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-2xl bg-red-500/10 text-red-400 group-hover:scale-110 transition-transform duration-300">
+                <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-7 h-7 sm:w-8 sm:h-8 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    <path d="M12 0C8.74 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 110 12.324 6.162 6.162 0 010-12.324zM12 16a4 4 0 100-8 4 4 0 000 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-red-400 transition-colors font-sans">Instagram</h3>
+                <h3 className="text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-blue-400 transition-colors font-sans">Instagram</h3>
                 <p className="text-zinc-400 text-xs mt-2 max-w-xs leading-relaxed font-light">Lihat ratusan portofolio terbaru kami, foto testimonial, keseruan wisuda, dan info promo di feeds/story kami.</p>
-                <span className="text-xs font-bold text-red-400 mt-4 sm:mt-6 inline-flex items-center gap-1 group-hover:underline">
-                  Ikuti @dins.selempang ➔
+                <span className="text-xs font-bold text-blue-400 mt-4 sm:mt-6 inline-flex items-center gap-1 group-hover:underline">
+                  Ikuti Instagram kami ➔
                 </span>
               </a>
             </RevealOnScroll>
 
             {/* Shopee Contact Card */}
             <RevealOnScroll delay={300}>
-              <a 
-                href="https://shopee.co.id/dins.selempang"
+              <a
+                href="https://shopee.co.id/dinzselempang"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[85vw] md:w-full shrink-0 snap-center group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 h-full"
+                className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-zinc-900/30 border border-zinc-800 hover:border-orange-500/30 hover:bg-orange-500/5 transition-all duration-300 h-full"
               >
-                <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform duration-300">
+                <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-2xl bg-orange-500/10 text-orange-400 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-7 h-7 sm:w-8 sm:h-8 fill-current" viewBox="0 0 24 24">
-                    <path d="M19.5 6.75h-3.25v-.5a4.25 4.25 0 0 0-8.5 0v.5H4.5A1.75 1.75 0 0 0 2.75 8.5v11c0 .966.784 1.75 1.75 1.75h15a1.75 1.75 0 0 0 1.75-1.75v-11a1.75 1.75 0 0 0-1.75-1.75Zm-10.25-.5a2.75 2.75 0 0 1 5.5 0v.5h-5.5v-.5Zm11 13.25a.25.25 0 0 1-.25.25h-15a.25.25 0 0 1-.25-.25v-11a.25.25 0 0 1 .25-.25h15a.25.25 0 0 1 .25.25v11Z"/>
-                    <path d="M11.5 11.25c-.828 0-1.5.56-1.5 1.25s.672 1.25 1.5 1.25 1.5.56 1.5 1.25-.672 1.25-1.5 1.25h-1a.5.5 0 0 1 0-1h1c.276 0 .5-.112.5-.25s-.224-.25-.5-.25c-.828 0-1.5-.56-1.5-1.25s.672-1.25 1.5-1.25h1a.5.5 0 0 1 0 1h-1Z"/>
+                    <path d="M15.9414 17.9633c.229-1.879-.981-3.077-4.1758-4.0969-1.548-.528-2.277-1.22-2.26-2.1719.065-1.056 1.048-1.825 2.352-1.85a5.2898 5.2898 0 0 1 2.8838.89c.116.072.197.06.263-.039.09-.145.315-.494.39-.62.051-.081.061-.187-.068-.281-.185-.1369-.704-.4149-.983-.5319a6.4697 6.4697 0 0 0-2.5118-.514c-1.909.008-3.4129 1.215-3.5389 2.826-.082 1.1629.494 2.1078 1.73 2.8278.262.152 1.6799.716 2.2438.892 1.774.552 2.695 1.5419 2.478 2.6969-.197 1.047-1.299 1.7239-2.818 1.7439-1.2039-.046-2.2878-.537-3.1278-1.19l-.141-.11c-.104-.08-.218-.075-.287.03-.05.077-.376.547-.458.67-.077.108-.035.168.045.234.35.293.817.613 1.134.775a6.7097 6.7097 0 0 0 2.8289.727 4.9048 4.9048 0 0 0 2.0759-.354c1.095-.465 1.8029-1.394 1.9449-2.554zM11.9986 1.4009c-2.068 0-3.7539 1.95-3.8329 4.3899h7.6657c-.08-2.44-1.765-4.3899-3.8328-4.3899zm7.8516 22.5981-.08.001-15.7843-.002c-1.074-.04-1.863-.91-1.971-1.991l-.01-.195L1.298 6.2858a.459.459 0 0 1 .45-.494h4.9748C6.8448 2.568 9.1607 0 11.9996 0c2.8388 0 5.1537 2.5689 5.2757 5.7898h4.9678a.459.459 0 0 1 .458.483l-.773 15.5883-.007.131c-.094 1.094-.979 1.9769-2.0709 2.0059z"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-blue-400 transition-colors font-sans">Shopee Indonesia</h3>
+                <h3 className="text-xl font-bold text-white mt-4 sm:mt-6 group-hover:text-orange-400 transition-colors font-sans">Shopee Indonesia</h3>
                 <p className="text-zinc-400 text-xs mt-2 max-w-xs leading-relaxed font-light font-sans">Nikmati keamanan bertransaksi dengan sistem Escrow Shopee, subsidi Gratis Ongkir, dan promo Cashback menarik.</p>
-                <span className="text-xs font-bold text-blue-400 mt-4 sm:mt-6 inline-flex items-center gap-1 group-hover:underline">
+                <span className="text-xs font-bold text-orange-400 mt-4 sm:mt-6 inline-flex items-center gap-1 group-hover:underline">
                   Kunjungi Toko ➔
                 </span>
               </a>
@@ -886,7 +882,7 @@ export default function Home() {
               &copy; {new Date().getFullYear()} Dins Selempang. Seluruh hak cipta dilindungi undang-undang.
             </p>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-8 text-xs text-zinc-400">
             <a href="#home" className="hover:text-blue-400 transition-colors">Home</a>
             <a href="#about" className="hover:text-blue-400 transition-colors">Tentang Kami</a>
