@@ -7,43 +7,63 @@ import Image from "next/image";
 const PRODUCTS = [
   {
     id: 1,
-    name: "Selempang Samping Satin Ribbon Gold",
-    material: "Satin",
+    name: "Selempang Samping Beludru Ribbon Silver",
+    material: "Beludru",
     border: "Pita",
     price: 40000,
-    image: "/sash_satin_ribbon.jpg",
-    description: "Selempang samping dengan bahan Satin Premium warna merah muda (pink) berkilau. Dilengkapi bordir emas presisi tinggi dan list pita satin emas minimalis modern.",
-    features: ["Bahan Satin Kilau Premium", "List Pita Satin Emas", "Bordir Rapi", "Model Samping / Bahu"]
+    image: "/sash_velvet_ribbon.jpg",
+    description: "Selempang samping bahan Beludru Premium warna marun bertekstur tebal dan mewah. Dilengkapi bordir benang perak (silver) presisi tinggi dan list pita perak minimalis modern.",
+    features: ["Bahan Beludru Marun Premium", "List Pita Perak Minimalis", "Bordir Rapi Perak", "Model Samping / Bahu"]
   },
   {
     id: 2,
-    name: "Selempang Samping Velvet Lace Navy",
-    material: "Beludru",
+    name: "Selempang Samping Satin Renda Wisuda Khotmul",
+    material: "Satin",
     border: "Renda",
     price: 50000,
-    image: "/sash_velvet_lace.jpg",
-    description: "Selempang samping bahan Beludru Premium navy blue bertekstur tebal dan lembut. Dilengkapi pinggiran renda rajut klasik emas mewah.",
-    features: ["Bahan Beludru Tebal", "List Renda Rajut Klasik", "Bordir Tebal Emas", "Model Samping / Bahu"]
+    image: "/sash_wisuda_khotmul.jpg",
+    description: "Selempang samping bahan Satin Premium warna navy blue berkilau. Dilengkapi bordir benang emas dan list renda rajut emas klasik yang anggun.",
+    features: ["Bahan Satin Kilau Premium", "List Renda Rajut Klasik", "Bordir Emas Presisi", "Model Samping / Bahu"]
   },
   {
     id: 3,
-    name: "Selempang Kalung Beludru List Emas",
+    name: "Selempang Samping Beludru Lulusan Terbaik",
     material: "Beludru",
-    border: "Pakai List",
-    price: 75000,
-    image: "/material_velvet.jpg",
-    description: "Selempang model kalung (V-Neck) berbahan beludru hitam premium dengan pinggiran list pita mengkilap membingkai seluruh sisi dada.",
-    features: ["Model Kalung (V-Neck)", "Bahan Beludru Hitam Pekat", "Bordir Kanan-Kiri Rapi", "Pakai List Pita Emas"]
+    border: "Pita",
+    price: 40000,
+    image: "/sash_lulusan_terbaik.jpg",
+    description: "Selempang samping bahan Beludru Premium hitam pekat bertekstur tebal dan mewah. Dilengkapi bordir benang perak presisi tinggi dan list pita perak minimalis.",
+    features: ["Bahan Beludru Hitam Premium", "List Pita Perak", "Bordir Rapi Perak", "Model Samping / Bahu"]
   },
   {
     id: 4,
-    name: "Selempang Kalung Batik Double Beludru",
+    name: "Selempang Samping Satin Birthday Queen",
+    material: "Satin",
+    border: "Pita",
+    price: 40000,
+    image: "/sash_birthday_queen.jpg",
+    description: "Selempang samping bahan Satin Premium warna merah muda (pink) berkilau manis. Dilengkapi bordir benang hitam dan ornamen mahkota untuk perayaan ulang tahun.",
+    features: ["Bahan Satin Kilau Premium", "Ornamen Mahkota Custom", "Bordir Hitam Elegan", "Cocok untuk Birthday Event"]
+  },
+  {
+    id: 5,
+    name: "Selempang Kalung Beludru Rina Cumlaude",
     material: "Beludru",
-    border: "Batik",
-    price: 90000,
-    image: "/material_satin.jpg",
-    description: "Selempang model kalung termewah dengan ornamen batik nusantara serta lapisan ganda double beludru kaku untuk penampilan royal sempurna.",
-    features: ["Model Kalung Mewah", "Aksen Batik Premium", "Konstruksi Double Beludru", "Tampilan Sangat Gagah"]
+    border: "Double Beludru",
+    price: 80000,
+    image: "/sash_kalung_cumlaude.jpg",
+    description: "Selempang kalung (V-Neck) bahan Beludru Premium navy blue dengan tulisan Cumlaude emas serta logo instansi bordir berwarna rapi.",
+    features: ["Model Kalung (V-Neck)", "Bahan Beludru Navy Blue", "Bordir Emas Cumlaude", "Custom Logo Berwarna"]
+  },
+  {
+    id: 6,
+    name: "Selempang Kalung Beludru Aiman Silver",
+    material: "Beludru",
+    border: "Pakai List",
+    price: 75000,
+    image: "/sash_kalung_aiman.jpg",
+    description: "Selempang kalung (V-Neck) bahan Beludru Premium hitam pekat dengan bordir perak, list pita perak membingkai seluruh sisi dada, dan logo instansi berwarna.",
+    features: ["Model Kalung (V-Neck)", "Bahan Beludru Hitam Pekat", "Bordir Perak Presisi", "Custom Logo Berwarna"]
   }
 ];
 
@@ -92,7 +112,6 @@ function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode; de
 }
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("Semua");
 
   // Calculator State
   const [calcType, setCalcType] = useState("Samping"); // Samping or Kalung
@@ -142,9 +161,7 @@ export default function Home() {
     return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   };
 
-  const filteredProducts = activeTab === "Semua"
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.material === activeTab);
+
 
   return (
     <div className="min-h-screen bg-[#050814] text-zinc-100 font-sans selection:bg-blue-600 selection:text-white scroll-smooth overflow-x-hidden">
@@ -383,7 +400,7 @@ export default function Home() {
           </RevealOnScroll>
         </section>
 
-        {/* 5. GALLERY / SHOWCASE SECTION */}
+         {/* 5. GALLERY / SHOWCASE SECTION */}
         <section id="gallery" className="relative py-16 md:py-24 border-t border-zinc-900">
           <RevealOnScroll delay={0}>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
@@ -391,56 +408,21 @@ export default function Home() {
                 <h2 className="text-2xl sm:text-3xl font-bold text-white sm:text-4xl font-sans">Galeri Selempang Pilihan</h2>
                 <p className="text-zinc-400 text-xs sm:text-sm mt-1">Beberapa hasil produksi nyata dari Dins Selempang.</p>
               </div>
-
-              {/* Filter Tabs */}
-              <div className="flex bg-zinc-900 border border-zinc-800 p-1 rounded-full self-start md:self-auto">
-                {["Semua", "Satin", "Beludru"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`rounded-full px-4 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold tracking-wide transition-all ${
-                      activeTab === tab
-                        ? "bg-blue-600 text-white shadow"
-                        : "text-zinc-400 hover:text-white"
-                    }`}
-                  >
-                    {tab === "Semua" ? "Semua Bahan" : `Bahan ${tab}`}
-                  </button>
-                ))}
-              </div>
             </div>
           </RevealOnScroll>
 
-          {/* Grid Products - Clean, compact grid for fitting many products */}
+          {/* Grid Products - Clean, compact picture grid for showcasing sashes */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {filteredProducts.map((product, index) => (
+            {PRODUCTS.map((product, index) => (
               <RevealOnScroll key={product.id} delay={index * 150}>
-                <div className="group flex flex-col bg-zinc-900/40 border border-zinc-800/80 rounded-2xl overflow-hidden hover:border-blue-500/40 transition-all duration-300 h-full">
-                  <div className="relative w-full aspect-square overflow-hidden rounded-t-2xl bg-[#03050d]">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-
-                  <div className="p-3 sm:p-4 flex flex-col justify-between flex-1 space-y-2">
-                    <div className="flex flex-col gap-2">
-                      <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-blue-400 transition-colors font-sans leading-snug line-clamp-2">
-                        {product.name}
-                      </h3>
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="inline-block border border-blue-500/20 bg-blue-500/5 text-blue-400 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md font-sans font-medium">
-                          Bahan: {product.material}
-                        </span>
-                        <span className="inline-block border border-blue-500/20 bg-blue-500/5 text-blue-400 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md font-sans font-medium">
-                          List: {product.border}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="group relative w-full aspect-square overflow-hidden rounded-2xl bg-[#03050d] border border-zinc-800/80 hover:border-blue-500/40 transition-all duration-300">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
               </RevealOnScroll>
             ))}
